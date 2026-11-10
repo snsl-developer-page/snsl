@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f5f6fa">
+<title>SNSL — Photos. Beautifully private.</title>
+<meta name="description" content="Photos – Liquid Glass is a private offline Android gallery and file manager by SNSL. No cloud uploads, no tracking.">
+<meta property="og:title" content="SNSL — Photos. Beautifully private.">
+<meta property="og:description" content="A private offline gallery with a beautiful Liquid Glass interface.">
+<meta property="og:image" content="https://lh3.googleusercontent.com/d/1tyTxd2SbyymL8hNSGGf98nuJeAqxKGub=w1600">
+<link rel="icon" href="https://lh3.googleusercontent.com/d/1Lzqc0QWvgZHokJ0SQZ5bKi2rbNOgl9vT=w256">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --ink:#17181c;
+  --muted:#777b86;
+  --blue:#087cff;
+  --blue2:#55a7ff;
+  --paper:#f5f6fa;
+  --white:#fff;
+  --line:rgba(20,25,40,.08);
+  --glass:rgba(255,255,255,.68);
+  --dark:#101116;
+  --radius-xl:40px;
+  --radius-lg:32px;
+  --radius-md:24px;
+  --radius-sm:18px;
+  --shadow:0 30px 90px rgba(31,48,85,.10);
+  --ease:cubic-bezier(.2,.75,.25,1);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;
+}
+
+*{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:110px;
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font:400 16px/1.65 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{
+  display:block;
+  max-width:100%;
+  height:auto;
+}
+
+a{color:inherit}
+button{font:inherit}
+::selection{background:#cfe5ff}
+
+.wrap{
+  width:min(1160px,calc(100% - 44px));
+  margin:auto;
+}
+
+h1,h2,h3,p{margin-top:0}
+
+h1,h2,h3{
+  letter-spacing:-.065em;
+  line-height:.99;
+}
+
+h1{
+  font-size:clamp(3.5rem,8.5vw,7.4rem);
+  font-weight:800;
+  margin:22px 0;
+}
+
+h2{
+  font-size:clamp(2.5rem,5.5vw,4.8rem);
+  font-weight:750;
+  margin:16px 0 22px;
+}
+
+h3{
+  font-size:1.35rem;
+  font-weight:700;
+  letter-spacing:-.04em;
+}
+
+p{color:var(--muted)}
+
+a:focus-visible,button:focus-visible{
+  outline:3px solid var(--blue);
+  outline-offset:4px;
+}
+
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  color:#347bd0;
+  background:#e8f2ff;
+  border:1px solid rgba(8,124,255,.08);
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:700;
+  letter-spacing:.04em;
+}
+
+.eyebrow:before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--blue);
+  box-shadow:0 0 0 4px rgba(8,124,255,.12);
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:11px;
+  padding:15px 23px;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:.92rem;
+  font-weight:700;
+  background:var(--ink);
+  color:white;
+  border:1px solid var(--ink);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s var(--ease);
+}
+
+.btn:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 35px rgba(15,25,45,.18);
+}
+
+.btn.primary{
+  background:var(--blue);
+  border-color:var(--blue);
+  box-shadow:0 10px 28px rgba(8,124,255,.2);
+}
+
+.btn.primary:hover{background:#006de8}
+
+.btn.secondary{
+  background:rgba(255,255,255,.7);
+  color:var(--ink);
+  border-color:rgba(20,25,40,.1);
+  backdrop-filter:blur(16px);
+}
+
+.btn .arrow{
+  font-size:1.15em;
+  transition:transform .3s;
+}
+
+.btn:hover .arrow{transform:translateX(4px)}
+
+
+/* HEADER */
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  width:100%;
+  padding:0;
+  margin:0;
+  transition:padding .3s;
+}
+
+.nav{
+  width:100%;
+  max-width:none;
+  height:78px;
+  margin:0;
+  padding:0 max(calc((100% - 1160px)/2),22px);
+  display:flex;
+  align-items:center;
+  gap:24px;
+  border:0;
+  border-bottom:1px solid rgba(20,25,40,.07);
+  border-radius:0;
+  background:rgba(250,251,255,.88);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  box-shadow:0 4px 25px rgba(24,39,75,.035);
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-weight:850;
+  letter-spacing:.08em;
+}
+
+.brand img{
+  width:34px;
+  height:34px;
+  border-radius:12px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  list-style:none;
+  margin:0 auto;
+  padding:0;
+}
+
+.nav-links a{
+  display:block;
+  text-decoration:none;
+  color:#666b76;
+  font-size:.88rem;
+  font-weight:600;
+  padding:10px 14px;
+  border-radius:999px;
+  transition:background .25s,color .25s;
+}
+
+.nav-links a:hover{
+  background:#eef1f7;
+  color:var(--ink);
+}
+
+.nav .btn{
+  padding:12px 19px;
+  font-size:.85rem;
+}
+
+
+/* HERO */
+
+.hero{
+  min-height:690px;
+  display:grid;
+  grid-template-columns:1fr .9fr;
+  align-items:center;
+  gap:30px;
+  padding:70px 0 55px;
+  position:relative;
+}
+
+.hero-copy{
+  position:relative;
+  z-index:2;
+  padding-bottom:45px;
+}
+
+.hero h1 span{
+  display:block;
+  background:linear-gradient(105deg,#111 12%,#397fc9 62%,#a2b9df 100%);
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero .lede{
+  font-size:clamp(1.05rem,1.5vw,1.25rem);
+  line-height:1.7;
+  max-width:550px;
+  margin:25px 0 32px;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+.hero-visual{
+  position:relative;
+  min-width:0;
+  display:grid;
+  place-items:center;
+  isolation:isolate;
+}
+
+.hero-visual:before{
+  content:"";
+  position:absolute;
+  width:125%;
+  aspect-ratio:1;
+  border-radius:50%;
+  z-index:-2;
+  background:
+    radial-gradient(circle at 35% 35%,#d5e6ff 0,transparent 38%),
+    radial-gradient(circle at 72% 65%,#f9dce8 0,transparent 36%),
+    radial-gradient(circle at 60% 20%,#d9f6ee 0,transparent 32%);
+  filter:blur(14px);
+  animation:ambient 12s ease-in-out infinite alternate;
+}
+
+.hero-visual:after{
+  content:"";
+  position:absolute;
+  width:75%;
+  aspect-ratio:1;
+  border:1px solid rgba(255,255,255,.8);
+  border-radius:50%;
+  z-index:-1;
+  animation:orbit 38s linear infinite;
+}
+
+.hero-phone{
+  width:min(78%,390px);
+  filter:drop-shadow(0 40px 40px rgba(30,45,80,.18));
+  animation:float 7s ease-in-out infinite;
+}
+
+.hero-phone img{
+  width:100%;
+  border-radius:38px;
+}
+
+.float-card{
+  position:absolute;
+  right:-3%;
+  bottom:12%;
+  padding:14px 18px;
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:22px;
+  background:rgba(255,255,255,.76);
+  backdrop-filter:blur(22px);
+  box-shadow:var(--shadow);
+  animation:float 6s ease-in-out infinite reverse;
+}
+
+.float-card b{
+  display:block;
+  font-size:.88rem;
+}
+
+.float-card span{
+  font-size:.75rem;
+  color:var(--muted);
+}
+
+
+/* APP STRIP */
+
+.app-strip{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:20px 24px;
+  border-radius:28px;
+  background:rgba(255,255,255,.78);
+  border:1px solid white;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+}
+
+.app-strip img{
+  width:58px;
+  height:58px;
+  border-radius:18px;
+}
+
+.app-strip-copy{flex:1}
+
+.app-strip-copy b{
+  display:block;
+  font-size:1rem;
+}
+
+.app-strip-copy span{
+  font-size:.84rem;
+  color:var(--muted);
+}
+
+
+/* SECTIONS */
+
+section{padding:125px 0}
+
+.section-intro{
+  max-width:720px;
+  margin-bottom:50px;
+}
+
+.section-intro p{
+  font-size:1.08rem;
+  max-width:570px;
+}
+
+.about-grid{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:70px;
+  align-items:center;
+}
+
+.about-copy p{
+  max-width:590px;
+  font-size:1.05rem;
+  margin:24px 0 30px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.stat{
+  min-height:160px;
+  padding:27px;
+  border-radius:30px;
+  background:white;
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 12px 40px rgba(25,40,75,.045);
+  transition:transform .45s var(--ease),box-shadow .45s;
+}
+
+.stat:hover{
+  transform:translateY(-7px) scale(1.015);
+  box-shadow:var(--shadow);
+}
+
+.stat strong{
+  display:block;
+  font-size:3.1rem;
+  letter-spacing:-.08em;
+  line-height:1.1;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:.85rem;
+}
+
+.stat.highlight{
+  background:linear-gradient(145deg,#087cff,#54a8ff);
+  color:white;
+}
+
+.stat.highlight span{color:rgba(255,255,255,.8)}
+
+
+/* FEATURE SCREENS */
+
+.screens-section{
+  background:#fff;
+  border-radius:var(--radius-xl);
+  margin:0 14px;
+  padding:110px 0;
+}
+
+.screens-heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:25px;
+  margin-bottom:38px;
+}
+
+.screens-heading p{
+  max-width:260px;
+  margin:0;
+}
+
+.screen-list{
+  display:grid;
+  gap:14px;
+}
+
+.screen-card{
+  border:1px solid var(--line);
+  border-radius:32px;
+  background:#f8f9fc;
+  overflow:hidden;
+  transition:box-shadow .45s,border-color .45s,transform .45s var(--ease);
+}
+
+.screen-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 20px 60px rgba(25,40,75,.07);
+}
+
+.screen-card[open]{
+  background:#f4f6fa;
+  border-color:transparent;
+  box-shadow:0 18px 60px rgba(25,40,75,.07);
+}
+
+.screen-card summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:23px 27px;
+}
+
+.screen-card summary::-webkit-details-marker{display:none}
+
+.screen-num{
+  font-size:.8rem;
+  color:#9ba1ad;
+  font-weight:700;
+  width:30px;
+  flex-shrink:0;
+}
+
+.screen-title{
+  font-size:1.2rem;
+  font-weight:700;
+  letter-spacing:-.04em;
+  flex:1;
+}
+
+/* CENTERED PLUS / X ICON */
+
+.screen-toggle{
+  width:42px;
+  height:42px;
+  min-width:42px;
+  flex-shrink:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  padding:0;
+  margin:0;
+
+  border:0;
+  border-radius:50%;
+
+  background:#fff;
+  color:#30343c;
+
+  font-family:Arial,sans-serif;
+  font-size:26px;
+  font-weight:400;
+  line-height:1;
+
+  text-align:center;
+  vertical-align:middle;
+
+  transition:
+    transform .4s var(--ease),
+    background .3s,
+    color .3s;
+}
+
+.screen-card[open] .screen-toggle{
+  transform:rotate(45deg);
+  background:var(--blue);
+  color:white;
+}
+
+.screen-content{
+  display:grid;
+  grid-template-columns:minmax(200px,300px) 1fr;
+  gap:55px;
+  align-items:center;
+  padding:0 55px 38px 80px;
+  animation:openDown .45s var(--ease);
+}
+
+.screen-content.flip{
+  grid-template-columns:1fr minmax(200px,300px);
+  padding:0 80px 38px 55px;
+}
+
+.screen-content.flip>img{
+  order:2;
+  justify-self:end;
+}
+
+.screen-content img{
+  width:100%;
+  max-width:270px;
+  max-height:480px;
+  object-fit:contain;
+  border-radius:24px;
+  filter:drop-shadow(0 20px 22px rgba(30,40,70,.12));
+}
+
+.screen-content p{max-width:510px}
+
+.chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:20px 0 0;
+  padding:0;
+  list-style:none;
+}
+
+.chips li{
+  font-size:.78rem;
+  font-weight:600;
+  padding:7px 12px;
+  border-radius:999px;
+  background:white;
+  border:1px solid var(--line);
+  color:#626875;
+}
+
+
+/* PRIVACY */
+
+.privacy-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:70px;
+  align-items:center;
+}
+
+.privacy-art{
+  min-height:490px;
+  border-radius:42px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 28% 25%,#d6e7ff,transparent 35%),
+    radial-gradient(circle at 75% 75%,#f9dbe7,transparent 38%),
+    #edf1f8;
+}
+
+.privacy-art:before,
+.privacy-art:after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(255,255,255,.85);
+  border-radius:50%;
+  width:75%;
+  aspect-ratio:1;
+  animation:orbit 30s linear infinite;
+}
+
+.privacy-art:after{
+  width:95%;
+  animation-direction:reverse;
+  animation-duration:45s;
+}
+
+.privacy-art img{
+  width:min(46%,230px);
+  border-radius:26%;
+  box-shadow:0 35px 70px rgba(40,55,100,.24);
+  z-index:1;
+  animation:float 7s ease-in-out infinite;
+}
+
+.privacy-points{
+  display:grid;
+  gap:12px;
+  margin-top:32px;
+}
+
+.privacy-point{
+  padding:20px 22px;
+  border-radius:22px;
+  background:white;
+  border:1px solid var(--line);
+  transition:transform .35s var(--ease);
+}
+
+.privacy-point:hover{transform:translateX(6px)}
+
+.privacy-point b{
+  display:block;
+  font-size:1rem;
+}
+
+.privacy-point span{
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+.privacy-more{margin-top:26px}
+
+
+/* PRIVACY POLICY */
+
+.policy-head{
+  max-width:720px;
+  margin-bottom:44px;
+}
+
+.policy-head p{font-size:1.08rem;max-width:620px}
+.policy-head h2{margin-bottom:14px}
+
+.policy-layout{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:44px;
+  align-items:start;
+}
+
+.policy-toc{
+  position:sticky;
+  top:104px;
+  padding:12px;
+  border-radius:26px;
+  background:var(--glass);
+  border:1px solid #fff;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+
+.policy-toc b{
+  display:block;
+  padding:8px 12px 6px;
+  font-size:.72rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#9ba1ad;
+}
+
+.policy-toc a{
+  display:flex;
+  gap:10px;
+  padding:9px 12px;
+  border-radius:14px;
+  text-decoration:none;
+  font-size:.86rem;
+  font-weight:600;
+  color:#666b76;
+  transition:background .25s,color .25s;
+}
+
+.policy-toc a span{
+  color:#9ba1ad;
+  font-weight:700;
+  width:20px;
+}
+
+.policy-toc a:hover,
+.policy-toc a.active{
+  background:#eef1f7;
+  color:var(--ink);
+}
+
+.policy-body{
+  display:grid;
+  gap:14px;
+  min-width:0;
+}
+
+.policy-glance{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.glance{
+  padding:22px;
+  border-radius:26px;
+  background:#fff;
+  border:1px solid var(--line);
+}
+
+.glance strong{
+  display:block;
+  font-size:2.2rem;
+  letter-spacing:-.07em;
+  line-height:1.1;
+}
+
+.glance span{
+  font-size:.82rem;
+  color:var(--muted);
+}
+
+.glance.hl{
+  background:linear-gradient(145deg,#087cff,#54a8ff);
+  color:#fff;
+  border-color:transparent;
+}
+
+.glance.hl span{color:rgba(255,255,255,.82)}
+
+.policy-card{
+  padding:30px 32px;
+  border-radius:30px;
+  background:#fff;
+  border:1px solid var(--line);
+  scroll-margin-top:110px;
+}
+
+.policy-card .num{
+  font-size:.78rem;
+  font-weight:700;
+  color:var(--blue);
+  letter-spacing:.06em;
+}
+
+.policy-card h3{
+  margin:6px 0 12px;
+  font-size:1.4rem;
+}
+
+.policy-card p,
+.policy-card li{
+  font-size:.97rem;
+  color:var(--muted);
+}
+
+.policy-card p:last-child{margin-bottom:0}
+
+.policy-card ul{
+  margin:10px 0 0;
+  padding-left:20px;
+}
+
+.policy-card li{margin:6px 0}
+
+.policy-card li b,.policy-card p b,.policy-head p b{color:var(--ink);font-weight:700}
+
+.policy-card a{
+  color:var(--blue);
+  font-weight:600;
+}
+
+
+/* REVIEWS */
+
+.review{
+  border-radius:40px;
+  padding:clamp(35px,7vw,82px);
+  background:linear-gradient(135deg,#151923,#252d3c);
+  color:white;
+  position:relative;
+  overflow:hidden;
+}
+
+.review:after{
+  content:"“";
+  position:absolute;
+  right:5%;
+  top:-100px;
+  font-size:27rem;
+  line-height:1;
+  color:rgba(255,255,255,.045);
+  font-weight:800;
+}
+
+.review .eyebrow{
+  background:rgba(255,255,255,.1);
+  color:#c5dcff;
+}
+
+blockquote{
+  position:relative;
+  z-index:1;
+  font-size:clamp(1.8rem,4.3vw,3.8rem);
+  font-weight:700;
+  letter-spacing:-.055em;
+  line-height:1.12;
+  max-width:850px;
+  margin:32px 0;
+}
+
+.review-bottom{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  color:#aeb7c8;
+  font-size:.9rem;
+  position:relative;
+  z-index:1;
+}
+
+.review-controls{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.review-controls button{
+  width:43px;
+  height:43px;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  color:white;
+  cursor:pointer;
+  transition:background .25s,transform .25s;
+}
+
+.review-controls button:hover{
+  background:var(--blue);
+  transform:scale(1.07);
+}
+
+
+/* CTA */
+
+.cta-panel{
+  position:relative;
+  overflow:hidden;
+  border-radius:42px;
+  padding:clamp(40px,7vw,90px);
+  background:#0f1726;
+  color:white;
+}
+
+.cta-panel:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 85% 15%,rgba(35,126,255,.35),transparent 32%),
+    radial-gradient(circle at 70% 100%,rgba(255,117,166,.18),transparent 34%);
+  pointer-events:none;
+}
+
+.cta-panel>*{position:relative}
+
+.cta-panel h2{max-width:700px}
+
+.cta-panel p{
+  color:#c1c9d7;
+  max-width:570px;
+  font-size:1.05rem;
+}
+
+.cta-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.cta-panel .secondary{
+  background:rgba(255,255,255,.1);
+  color:white;
+  border-color:rgba(255,255,255,.2);
+}
+
+
+/* FULL-WIDTH FOOTER */
+
+footer{
+  width:100%;
+  margin:0;
+  padding:80px 0 25px;
+  background:#101116;
+  color:#aeb3c0;
+  border-radius:0;
+}
+
+.footer-top{
+  display:flex;
+  justify-content:space-between;
+  gap:50px;
+  flex-wrap:wrap;
+}
+
+.footer-brand{max-width:330px}
+
+.footer-brand .brand{
+  color:white;
+  font-size:1.1rem;
+}
+
+.footer-brand p{
+  color:#9299a8;
+  font-size:.9rem;
+  margin-top:18px;
+}
+
+.footer-cols{
+  display:flex;
+  gap:70px;
+  flex-wrap:wrap;
+}
+
+.footer-cols b{
+  display:block;
+  color:white;
+  margin-bottom:13px;
+  font-size:.88rem;
+}
+
+.footer-cols a,
+.footer-cols span{
+  display:block;
+  text-decoration:none;
+  color:#aeb3c0;
+  font-size:.86rem;
+  margin:8px 0;
+}
+
+.footer-cols a:hover{color:white}
+
+.footer-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+  border-top:1px solid rgba(255,255,255,.1);
+  margin-top:60px;
+  padding-top:22px;
+  font-size:.8rem;
+}
+
+.footer-bottom a{
+  color:#c8ced9;
+  text-decoration:none;
+  margin-left:18px;
+}
+
+
+/* WHAT'S NEW */
+
+.wn-head{max-width:640px;margin-bottom:38px}
+
+.wn-latest{
+  position:relative;
+  overflow:hidden;
+  border-radius:40px;
+  padding:clamp(32px,6vw,70px);
+  background:linear-gradient(135deg,#151923,#252d3c);
+  color:#fff;
+}
+
+.wn-latest:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 88% 12%,rgba(35,126,255,.35),transparent 34%),
+    radial-gradient(circle at 70% 100%,rgba(255,117,166,.16),transparent 34%);
+}
+
+.wn-latest>*{position:relative}
+.wn-latest .eyebrow{background:rgba(255,255,255,.1);color:#c5dcff}
+.wn-latest h3{font-size:clamp(2rem,4vw,3rem);margin:22px 0 8px;color:#fff}
+.wn-meta{color:#aeb7c8;font-size:.92rem;margin-bottom:26px}
+
+.wn-notes{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+  max-width:720px;
+}
+
+.wn-notes li{
+  padding:15px 20px;
+  border-radius:20px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  color:#d3dae8;
+  font-size:.97rem;
+}
+
+.wn-history{
+  display:grid;
+  gap:14px;
+  margin-top:14px;
+}
+
+.release{
+  border:1px solid var(--line);
+  border-radius:30px;
+  background:#f8f9fc;
+  overflow:hidden;
+  transition:box-shadow .45s,transform .45s var(--ease);
+}
+
+.release:hover{
+  transform:translateY(-3px);
+  box-shadow:0 20px 60px rgba(25,40,75,.07);
+}
+
+.release summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:22px 26px;
+}
+
+.release summary::-webkit-details-marker{display:none}
+.release .ver{font-weight:800;letter-spacing:-.04em;font-size:1.15rem}
+.release .date{flex:1;color:#9ba1ad;font-size:.85rem;font-weight:600}
+
+.release .toggle{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font:400 24px/1 Arial,sans-serif;
+  transition:transform .4s var(--ease),background .3s,color .3s;
+}
+
+.release[open] .toggle{
+  transform:rotate(45deg);
+  background:var(--blue);
+  color:#fff;
+}
+
+.wn-notes .sub{
+  list-style:disc;
+  margin:8px 0 0;
+  padding-left:20px;
+  display:block;
+}
+
+.wn-notes .sub li{
+  padding:2px 0;
+  background:none;
+  border:0;
+  border-radius:0;
+  font-size:.92rem;
+}
+
+.release-body .sub{margin:4px 0 0;padding-left:20px}
+.release-body .sub li{margin:3px 0}
+
+.release-body{padding:0 28px 26px;animation:openDown .45s var(--ease)}
+.release-body ul{margin:0;padding-left:20px}
+.release-body li{color:var(--muted);margin:7px 0}
+
+.feedback{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:56px;
+  align-items:start;
+  margin-top:90px;
+}
+
+.feedback-copy p{font-size:1.05rem;max-width:460px}
+
+.note{
+  margin-top:22px;
+  padding:18px 20px;
+  border-radius:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  font-size:.88rem;
+  color:var(--muted);
+}
+
+.note b{display:block;color:var(--ink);margin-bottom:2px}
+
+.form{
+  padding:32px;
+  border-radius:34px;
+  background:var(--glass);
+  border:1px solid #fff;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  display:grid;
+  gap:16px;
+}
+
+.field{display:grid;gap:7px}
+.field label{font-size:.82rem;font-weight:700;color:#4a4f5a}
+
+.field input,.field select,.field textarea{
+  width:100%;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(20,25,40,.1);
+  background:#fff;
+  color:var(--ink);
+  font:inherit;
+  font-size:.95rem;
+  transition:border-color .25s,box-shadow .25s;
+}
+
+.field textarea{min-height:140px;resize:vertical}
+
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px rgba(8,124,255,.12);
+  outline:none;
+}
+
+.form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .btn{cursor:pointer}
+.form-status{font-size:.85rem;color:var(--muted);min-height:1.4em;margin:0}
+
+
+/* ANIMATIONS */
+
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity .8s var(--ease),transform .8s var(--ease);
+}
+
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-16px)}
+}
+
+@keyframes ambient{
+  0%{transform:scale(.92) rotate(-5deg)}
+  100%{transform:scale(1.08) rotate(7deg)}
+}
+
+@keyframes orbit{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes openDown{
+  from{opacity:0;transform:translateY(-12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+
+/* TABLET */
+
+@media(max-width:850px){
+
+  .nav-links{display:none}
+
+  .nav .btn{margin-left:auto}
+
+  .hero{
+    grid-template-columns:1fr;
+    min-height:0;
+    padding-top:55px;
+    text-align:center;
+  }
+
+  .hero-copy{padding-bottom:0}
+
+  .hero .lede{margin-inline:auto}
+
+  .actions{justify-content:center}
+
+  .hero-visual{
+    max-width:540px;
+    width:100%;
+    margin:20px auto 0;
+    min-height:480px;
+  }
+
+  .hero-phone{width:min(65%,330px)}
+
+  .float-card{
+    right:2%;
+    bottom:8%;
+  }
+
+  .about-grid,
+  .privacy-grid{
+    grid-template-columns:1fr;
+    gap:38px;
+  }
+
+  .screens-section{
+    margin:0 7px;
+    padding:80px 0;
+    border-radius:32px;
+  }
+
+  .screen-content,
+  .screen-content.flip{
+    padding:0 28px 30px;
+    gap:25px;
+  }
+
+  .privacy-art{
+    min-height:390px;
+    order:2;
+  }
+
+  .policy-layout{grid-template-columns:1fr}
+
+  .policy-toc{
+    position:static;
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px;
+  }
+
+  .policy-toc b{width:100%}
+
+  .feedback{
+    grid-template-columns:1fr;
+    gap:34px;
+    margin-top:70px;
+  }
+}
+
+
+/* MOBILE */
+
+@media(max-width:560px){
+
+  .wrap{
+    width:min(100% - 30px,1160px);
+  }
+
+  .site-header{padding:0}
+
+  .nav{
+    width:100%;
+    height:64px;
+    padding:0 15px;
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+  }
+
+  .nav .btn{
+    padding:10px 14px;
+    font-size:.78rem;
+  }
+
+  .hero{padding-top:48px}
+
+  .hero h1{
+    font-size:clamp(3.2rem,16vw,5rem);
+  }
+
+  .hero-visual{min-height:390px}
+
+  .hero-phone{width:68%}
+
+  .float-card{
+    right:0;
+    bottom:5%;
+    padding:11px 13px;
+  }
+
+  section{padding:82px 0}
+
+  .app-strip{
+    padding:15px;
+    gap:12px;
+    flex-wrap:wrap;
+    border-radius:23px;
+  }
+
+  .app-strip img{
+    width:48px;
+    height:48px;
+  }
+
+  .app-strip .btn{width:100%}
+
+  .stat{
+    min-height:130px;
+    padding:20px;
+    border-radius:23px;
+  }
+
+  .stat strong{font-size:2.6rem}
+
+  .screens-heading{display:block}
+
+  .screens-heading p{margin-top:15px}
+
+  .screen-card{border-radius:25px}
+
+  .screen-card summary{
+    padding:18px 17px;
+    gap:12px;
+  }
+
+  .screen-title{font-size:1.04rem}
+
+  .screen-toggle{
+    width:36px;
+    height:36px;
+    min-width:36px;
+    font-size:23px;
+    line-height:1;
+  }
+
+  .screen-content,
+  .screen-content.flip{
+    grid-template-columns:1fr;
+    padding:0 22px 25px;
+    gap:18px;
+  }
+
+  .screen-content.flip>img{
+    order:0;
+    justify-self:center;
+  }
+
+  .screen-content img{
+    max-height:390px;
+    margin:auto;
+  }
+
+  .privacy-art{
+    min-height:320px;
+    border-radius:30px;
+  }
+
+  .policy-glance{grid-template-columns:1fr}
+
+  .wn-latest{border-radius:30px}
+  .form{padding:22px;border-radius:26px}
+  .form .row{grid-template-columns:1fr}
+  .release summary{padding:18px}
+  .release-body{padding:0 20px 22px}
+
+  .policy-card{
+    padding:24px 22px;
+    border-radius:24px;
+  }
+
+  .review{border-radius:30px}
+
+  .review-bottom{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .cta-panel{border-radius:30px}
+
+  .footer-cols{gap:35px}
+
+  footer{
+    width:100%;
+    border-radius:0;
+    padding:60px 0 25px;
+  }
+
+  .footer-bottom{display:block}
+
+  .footer-bottom span{
+    display:block;
+    margin-bottom:12px;
+  }
+
+  .footer-bottom a{
+    margin:0 16px 0 0;
+  }
+}
+
+
+/* REDUCED MOTION */
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+
+  .reveal{
+    opacity:1;
+    transform:none;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+ <div class="nav">
+  <a class="brand" href="#top">
+   <img src="https://lh3.googleusercontent.com/d/1Lzqc0QWvgZHokJ0SQZ5bKi2rbNOgl9vT=w256" alt="">
+   SNSL
+  </a>
+
+  <ul class="nav-links">
+   <li><a href="#about">About</a></li>
+   <li><a href="#apps">App screens</a></li>
+   <li><a href="#privacy">Privacy</a></li>
+   <li><a href="#policy">Policy</a></li>
+   <li><a href="#whats-new">What’s new</a></li>
+   <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.snsl.liquidphoto">
+   Get the app <span class="arrow">→</span>
+  </a>
+ </div>
+</header>
+
+<main id="top">
+
+ <div class="wrap">
+
+  <section class="hero">
+
+   <div class="hero-copy reveal">
+    <span class="eyebrow">Modern Apps. Thoughtful Design. — Minimal and stylish.</span>
+
+    <h1>Photos.<br><span>Beautifully private.</span></h1>
+
+    <p class="lede">
+     Meet Photos – Liquid Glass. A modern Android gallery designed to feel effortless, keep your memories on your device, and work even when you’re offline.
+    </p>
+
+    <div class="actions">
+     <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.snsl.liquidphoto">
+      Explore on Google Play <span class="arrow">→</span>
+     </a>
+
+     <a class="btn secondary" href="#apps">
+      Discover the experience
+     </a>
+    </div>
+   </div>
+
+   <div class="hero-visual reveal">
+    <div class="hero-phone">
+     <img src="https://lh3.googleusercontent.com/d/1dse3C8R6baJNDsAuZuM7bszoZa4n_0PR=w900" width="900" height="1601" alt="Photos – Liquid Glass gallery screen">
+    </div>
+
+    <div class="float-card">
+     <b>Private by design</b>
+     <span>Offline · On-device · Yours</span>
+    </div>
+   </div>
+
+  </section>
+
+  <div class="app-strip reveal">
+   <img src="https://lh3.googleusercontent.com/d/1tciigXTisfNr1ejOxBIO1uZ1IAYyAeOy=w512" alt="Photos – Liquid Glass app icon">
+
+   <div class="app-strip-copy">
+    <b>Photos – Liquid Glass</b>
+    <span>Your photos. Your device. Your control.</span>
+   </div>
+
+   <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.snsl.liquidphoto">
+    View on Google Play <span class="arrow">→</span>
+   </a>
+  </div>
+
+ </div>
+
+ <section id="about">
+  <div class="wrap about-grid">
+
+   <div class="about-copy reveal">
+    <span class="eyebrow">A little about SNSL</span>
+
+    <h2>Thoughtful tools.<br>Personal memories.</h2>
+
+    <p>
+     SNSL is an independent developer. We create modern Android experiences with thoughtful details, fluid interactions and a simple promise: your personal media stays yours.
+    </p>
+
+    <a class="btn" href="#policy">
+     Read our privacy policy <span class="arrow">→</span>
+    </a>
+   </div>
+
+   <div class="stats reveal">
+    <div class="stat"><strong>5.0</strong><span>Google Play rating</span></div>
+    <div class="stat"><strong>50+</strong><span>Downloads</span></div>
+    <div class="stat highlight"><strong>0</strong><span>Data collected*</span></div>
+    <div class="stat"><strong>3+</strong><span>Content rating</span></div>
+   </div>
+
+  </div>
+ </section>
+
+ <section id="apps" class="screens-section">
+  <div class="wrap">
+
+   <div class="screens-heading reveal">
+    <div>
+     <span class="eyebrow">Made to feel effortless</span>
+     <h2>Every detail,<br>in its place.</h2>
+    </div>
+
+    <p>Explore the key screens and tools inside Photos – Liquid Glass.</p>
+   </div>
+
+   <div class="screen-list">
+
+    <details class="screen-card reveal" open>
+     <summary>
+      <span class="screen-num">01</span>
+      <span class="screen-title">Your library</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content">
+      <img src="https://lh3.googleusercontent.com/d/1dse3C8R6baJNDsAuZuM7bszoZa4n_0PR=w900" alt="Library screen">
+
+      <div>
+       <h3>All your moments, at a glance.</h3>
+       <p>Browse your photos and videos in one smooth, date-grouped library, with a floating glass tab bar and quick Select mode for bulk actions.</p>
+       <ul class="chips">
+        <li>Fast loading</li>
+        <li>Select mode</li>
+        <li>Phone and tablet support</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+    <details class="screen-card reveal">
+     <summary>
+      <span class="screen-num">02</span>
+      <span class="screen-title">Collections</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content flip">
+      <img src="https://lh3.googleusercontent.com/d/1akwM3sy1LAFChgpwroPAYMObpcC9TcEO=w900" alt="Collections screen">
+
+      <div>
+       <h3>Everything, neatly organised.</h3>
+       <p>Find albums, photos, videos, screenshots, selfies, portraits, recordings, favorites, hidden items, recently deleted files, downloads and QR codes.</p>
+       <ul class="chips">
+        <li>Media categories</li>
+        <li>Hidden and favorites</li>
+        <li>Quick access</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+    <details class="screen-card reveal">
+     <summary>
+      <span class="screen-num">03</span>
+      <span class="screen-title">Albums and folders</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content">
+      <img src="https://lh3.googleusercontent.com/d/1X4gHcp8iBKFRGVhuxf27camvH_be1HMH=w900" alt="Albums screen">
+
+      <div>
+       <h3>Your folders, your way.</h3>
+       <p>Open albums with full-bleed covers, browse real device folders and manage files across internal storage and SD cards.</p>
+       <ul class="chips">
+        <li>Folder browsing</li>
+        <li>Move and rename</li>
+        <li>Copy files</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+    <details class="screen-card reveal">
+     <summary>
+      <span class="screen-num">04</span>
+      <span class="screen-title">Photo and video preview</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content flip">
+      <img src="https://lh3.googleusercontent.com/d/1stPQEiCziLSVCzlqZ0K9fI1KwCYDNu4X=w900" alt="Media preview screen">
+
+      <div>
+       <h3>Stay in the moment.</h3>
+       <p>View photos and videos with quick controls to play, scrub, favorite, inspect details, edit, share or delete.</p>
+       <ul class="chips">
+        <li>Playback controls</li>
+        <li>Quick actions</li>
+        <li>Media details</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+    <details class="screen-card reveal">
+     <summary>
+      <span class="screen-num">05</span>
+      <span class="screen-title">Search</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content">
+      <img src="https://lh3.googleusercontent.com/d/1EGupnrHzd6pQgTdJxdzlGPxcdNkyEix3=w900" alt="Search screen">
+
+      <div>
+       <h3>Find that moment faster.</h3>
+       <p>Search your library, narrow results by date and filter by media type to get to the right memory.</p>
+       <ul class="chips">
+        <li>Date filters</li>
+        <li>Media type filters</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+    <details class="screen-card reveal">
+     <summary>
+      <span class="screen-num">06</span>
+      <span class="screen-title">Photo editor</span>
+      <span class="screen-toggle">+</span>
+     </summary>
+
+     <div class="screen-content flip">
+      <img src="https://lh3.googleusercontent.com/d/1gwP3Gluc-rCtUFDOtBPBpiqnVGh4rVtT=w900" alt="Photo editor screen">
+
+      <div>
+       <h3>Make every photo yours.</h3>
+       <p>Crop, rotate, flip and adjust your photos. Start with Auto tools including Enhance, Dynamic and AI Enhance.</p>
+       <ul class="chips">
+        <li>Crop and rotate</li>
+        <li>Adjustments</li>
+        <li>AI Enhance</li>
+       </ul>
+      </div>
+     </div>
+    </details>
+
+   </div>
+  </div>
+ </section>
+
+ <section id="privacy">
+  <div class="wrap privacy-grid">
+
+   <div class="privacy-art reveal">
+    <img src="https://lh3.googleusercontent.com/d/1tciigXTisfNr1ejOxBIO1uZ1IAYyAeOy=w512" alt="Photos – Liquid Glass app icon">
+   </div>
+
+   <div class="reveal">
+    <span class="eyebrow">Your privacy comes first</span>
+    <h2>Beautifully simple.<br>Private by design.</h2>
+
+    <div class="privacy-points">
+     <div class="privacy-point">
+      <b>No cloud. No account.</b>
+      <span>Your gallery is designed to keep your media on your device.</span>
+     </div>
+
+     <div class="privacy-point">
+      <b>Works offline</b>
+      <span>Browse and manage your library without an internet connection.</span>
+     </div>
+
+     <div class="privacy-point">
+      <b>Real file control</b>
+      <span>Move, rename, copy and delete files in your device folders.</span>
+     </div>
+
+     <div class="privacy-point">
+      <b>No tracking</b>
+      <span>Google Play’s Data safety information lists no data collected or shared.</span>
+     </div>
+    </div>
+
+    <div class="privacy-more">
+     <a class="btn secondary" href="#policy">Read the full policy <span class="arrow">→</span></a>
+    </div>
+   </div>
+
+  </div>
+ </section>
+
+ <section id="policy" style="padding-top:0">
+  <div class="wrap">
+
+   <div class="policy-head reveal">
+    <span class="eyebrow">Privacy policy</span>
+    <h2>Privacy Policy</h2>
+    <p><b>Effective Date:</b> January 1, 2025</p>
+    <p>This Privacy Policy explains how Photos - Liquid Glass (“we”, “our”, or “the App”) handles your information. By using the App, you agree to the terms of this Privacy Policy.</p>
+   </div>
+
+   <div class="policy-layout">
+
+    <nav class="policy-toc" aria-label="Policy contents">
+     <b>Contents</b>
+     <a href="#p1"><span>01</span>Data Collection</a>
+     <a href="#p2"><span>02</span>Photos and Videos</a>
+     <a href="#p3"><span>03</span>Permissions Used</a>
+     <a href="#p4"><span>04</span>Third-Party Services</a>
+     <a href="#p5"><span>05</span>Data Security</a>
+     <a href="#p6"><span>06</span>Children’s Privacy</a>
+     <a href="#p7"><span>07</span>Changes</a>
+     <a href="#p8"><span>08</span>Contact Us</a>
+    </nav>
+
+    <div class="policy-body">
+
+     <div class="policy-glance reveal">
+      <div class="glance hl"><strong>0</strong><span>Personal data collected</span></div>
+      <div class="glance"><strong>No</strong><span>Login or cloud sync</span></div>
+      <div class="glance"><strong>0</strong><span>Uploads to our servers</span></div>
+     </div>
+
+     <article class="policy-card reveal" id="p1">
+      <span class="num">01</span>
+      <h3>Data Collection</h3>
+      <p>Gallery does not collect or store any personally identifiable information (PII) from its users. The App does not require registration, login, or any cloud synchronization.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p2">
+      <span class="num">02</span>
+      <h3>Access to Photos and Videos</h3>
+      <p>Gallery requires permission to access all photos and videos on your device. This permission is necessary to provide the App’s core functionality:</p>
+      <ul>
+       <li>View, organize, and manage your media across all folders, including non-media directories.</li>
+       <li>Edit, rename, move, and delete media seamlessly without repeated permission prompts.</li>
+      </ul>
+      <p style="margin-top:14px"><b>No Uploading:</b> Your photos and videos remain on your device and are never uploaded to our servers.</p>
+      <p><b>Vault Feature:</b> If you choose to move files into the Vault, they are stored locally in the App’s private storage area, inaccessible to other apps.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p3">
+      <span class="num">03</span>
+      <h3>Permissions Used</h3>
+      <p>Photos - Liquid Glass requests the following permissions:</p>
+      <ul>
+       <li><b>Storage/Media Access:</b> To display, organize, and manage your photos and videos.</li>
+       <li><b>Full Storage Access (MANAGE_EXTERNAL_STORAGE):</b> To allow seamless browsing, editing, renaming, moving, and deleting of media across all folders.</li>
+       <li><b>Optional Vault Access:</b> To move selected files into private internal storage.</li>
+      </ul>
+      <p style="margin-top:14px">These permissions are strictly used for core functionality. We do not use them for tracking, analytics, or advertising purposes.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p4">
+      <span class="num">04</span>
+      <h3>Third-Party Services</h3>
+      <p>Photos - Liquid Glass does not use third-party analytics tools, ad networks, or external APIs that collect personal information.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p5">
+      <span class="num">05</span>
+      <h3>Data Security</h3>
+      <p>Your media files are stored locally on your device. Files moved to the Vault are placed in internal storage inaccessible to other apps.</p>
+      <ul>
+       <li><b>Encryption:</b> The App does not encrypt your media.</li>
+       <li><b>Data Loss:</b> Files in the Vault may be lost if the app is uninstalled or the device is reset.</li>
+      </ul>
+     </article>
+
+     <article class="policy-card reveal" id="p6">
+      <span class="num">06</span>
+      <h3>Children’s Privacy</h3>
+      <p>Gallery is not intended for children under the age of 13. We do not knowingly collect personal information from children.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p7">
+      <span class="num">07</span>
+      <h3>Changes to this Privacy Policy</h3>
+      <p>We may update this Privacy Policy from time to time. Any changes will be posted within the App. Continued use of the App after changes means you accept the revised policy.</p>
+     </article>
+
+     <article class="policy-card reveal" id="p8">
+      <span class="num">08</span>
+      <h3>Contact Us</h3>
+      <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+      <p>📧 Email: <a href="mailto:support.developer@gmail.com">support.developer@gmail.com</a></p>
+     </article>
+
+    </div>
+   </div>
+
+  </div>
+ </section>
+
+ <section id="whats-new" style="padding-top:0">
+  <div class="wrap">
+
+   <div class="wn-head reveal">
+    <span class="eyebrow">What’s new</span>
+    <h2>Always improving.</h2>
+    <p>The same release notes published on Google Play, with earlier versions below.</p>
+   </div>
+
+   <div class="wn-latest reveal" id="wn-latest"></div>
+
+   <div class="wn-history" id="wn-history"></div>
+
+   <div class="feedback">
+
+    <div class="feedback-copy reveal">
+     <span class="eyebrow">Version feedback</span>
+     <h2>Tell us how it feels.</h2>
+     <p>Found a bug in the new version, or have an idea for the next one? Send it to the developer.</p>
+     <div class="note">
+      <b>Private by design</b>
+      This form doesn’t send data to any server. It opens your email app with your message ready to send.
+     </div>
+    </div>
+
+    <form class="form reveal" id="feedback-form" novalidate>
+     <div class="row">
+      <div class="field">
+       <label for="f-name">Name (optional)</label>
+       <input id="f-name" type="text" autocomplete="name" placeholder="Your name">
+      </div>
+      <div class="field">
+       <label for="f-version">App version</label>
+       <input id="f-version" type="text" placeholder="e.g. 1.0.0">
+      </div>
+     </div>
+
+     <div class="row">
+      <div class="field">
+       <label for="f-type">Type</label>
+       <select id="f-type">
+        <option>Feedback</option>
+        <option>Bug report</option>
+        <option>Feature request</option>
+        <option>Other</option>
+       </select>
+      </div>
+      <div class="field">
+       <label for="f-device">Device (optional)</label>
+       <input id="f-device" type="text" placeholder="e.g. Pixel 8, Android 15">
+      </div>
+     </div>
+
+     <div class="field">
+      <label for="f-message">Message</label>
+      <textarea id="f-message" required placeholder="What would you like to tell us?"></textarea>
+     </div>
+
+     <button class="btn primary" type="submit">Send by email <span class="arrow">→</span></button>
+     <p class="form-status" id="form-status" role="status"></p>
+    </form>
+
+   </div>
+
+  </div>
+ </section>
+
+ <section style="padding-top:0">
+  <div class="wrap review reveal">
+
+   <span class="eyebrow">What people are saying</span>
+
+   <blockquote id="quote">“This is a beautiful and fantastic photo gallery.”</blockquote>
+
+   <div class="review-bottom">
+    <span id="review-author">Tulpa Omega · Google Play review</span>
+
+    <div class="review-controls">
+     <span id="review-count">01 / 02</span>
+     <button id="prev" aria-label="Previous review">←</button>
+     <button id="next" aria-label="Next review">→</button>
+    </div>
+   </div>
+
+  </div>
+ </section>
+
+ <section id="contact" style="padding-top:0">
+  <div class="wrap">
+
+   <div class="cta-panel reveal">
+    <span class="eyebrow">Build on what’s already here</span>
+
+    <h2>The app base is available for licensing.</h2>
+
+    <p>Start with a finished Android gallery experience, including its glass interface and media-management foundation, instead of building everything from scratch. Pricing and licence terms are available on request.</p>
+
+    <div class="cta-actions">
+     <a class="btn primary" href="mailto:snsl.developer@gmail.com?subject=App%20base%20enquiry%3A%20Photos%20%E2%80%93%20Liquid%20Glass">
+      Talk to the developer <span class="arrow">→</span>
+     </a>
+
+     <a class="btn secondary" href="https://play.google.com/store/apps/details?id=com.snsl.liquidphoto">
+      Try the app
+     </a>
+    </div>
+   </div>
+
+  </div>
+ </section>
+
+</main>
+
+<footer>
+ <div class="wrap">
+
+  <div class="footer-top">
+
+   <div class="footer-brand">
+    <a class="brand" href="#top">
+     <img src="https://lh3.googleusercontent.com/d/1Lzqc0QWvgZHokJ0SQZ5bKi2rbNOgl9vT=w256" alt="">
+     SNSL
+    </a>
+
+    <p>Modern Apps. Thoughtful Design. — Minimal and stylish.</p>
+   </div>
+
+   <div class="footer-cols">
+
+    <div>
+     <b>Explore</b>
+     <a href="#about">About SNSL</a>
+     <a href="#apps">App screens</a>
+     <a href="#privacy">Privacy</a>
+     <a href="#policy">Privacy policy</a>
+     <a href="#whats-new">What’s new</a>
+    </div>
+
+    <div>
+     <b>Apps</b>
+     <a href="https://play.google.com/store/apps/details?id=com.snsl.liquidphoto">Photos – Liquid Glass</a>
+     <a href="https://play.google.com/store/apps/details?id=com.kh.reaksmeyarun.developer.gallerypro">Gallery – Photo &amp; Video</a>
+     <a href="https://play.google.com/store/apps/details?id=com.kh.reaksmeyarun.developer.safefolderx">Safe Gallery – Photo Vault</a>
+    </div>
+
+    <div>
+     <b>Contact</b>
+     <a href="mailto:snsl.developer@gmail.com">snsl.developer@gmail.com</a>
+     <span>Phnom Penh, Cambodia</span>
+    </div>
+
+   </div>
+  </div>
+
+  <div class="footer-bottom">
+   <span>© 2026 SNSL. Google Play is a trademark of Google LLC.</span>
+
+   <span>
+    <a href="#policy">Privacy policy</a>
+    <a href="https://play.google.com/store/apps/dev?id=8249788015098241124">Google Play developer page</a>
+   </span>
+  </div>
+
+ </div>
+</footer>
+
+<script>
+(() => {
+
+  // Reveal sections as they enter the viewport.
+  const revealItems = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -35px 0px'
+    });
+
+    revealItems.forEach(item => observer.observe(item));
+  } else {
+    revealItems.forEach(item => item.classList.add('visible'));
+  }
+
+
+  // Review carousel.
+  const reviews = [
+    [
+      '“This is a beautiful and fantastic photo gallery.”',
+      'Tulpa Omega · Google Play review'
+    ],
+    [
+      '“Just downloaded the App yesterday and so far loving it.”',
+      'Michelle Gray · Google Play review'
+    ]
+  ];
+
+  let current = 0;
+
+  const quote = document.getElementById('quote');
+  const author = document.getElementById('review-author');
+  const count = document.getElementById('review-count');
+
+  function showReview(index) {
+    current = (index + reviews.length) % reviews.length;
+
+    quote.animate(
+      [
+        {opacity:1,transform:'translateY(0)'},
+        {opacity:0,transform:'translateY(8px)'}
+      ],
+      {
+        duration:140,
+        fill:'forwards'
+      }
+    ).onfinish = () => {
+
+      quote.textContent = reviews[current][0];
+      author.textContent = reviews[current][1];
+      count.textContent = `0${current+1} / 0${reviews.length}`;
+
+      quote.animate(
+        [
+          {opacity:0,transform:'translateY(8px)'},
+          {opacity:1,transform:'translateY(0)'}
+        ],
+        {
+          duration:260,
+          fill:'forwards'
+        }
+      );
+    };
+  }
+
+  document.getElementById('prev').addEventListener('click', () => {
+    showReview(current - 1);
+  });
+
+  document.getElementById('next').addEventListener('click', () => {
+    showReview(current + 1);
+  });
+
+
+  // Keep only one feature panel open at a time.
+  document.querySelectorAll('.screen-card').forEach(card => {
+    card.addEventListener('toggle', () => {
+      if (card.open) {
+        document.querySelectorAll('.screen-card').forEach(other => {
+          if (other !== card) other.open = false;
+        });
+      }
+    });
+  });
+
+
+  // WHAT'S NEW: paste your Google Play "What's new" text here, newest first.
+  // One string per line of notes. Add a new object at the TOP for every release.
+  const releases = [
+    {
+      version: '1.3.0 (108)',
+      date: '',
+      notes: [
+        '⚡ Faster Loading – Media now loads up to 2.3× faster.',
+        '✨ Preview Mode – Enjoy your memories with auto-play in Albums, Trips & Memories.',
+        '🗺️ Trips – Relive and organize your favorite moments by trip.',
+        '🤖 Offline AI – Smart on-device AI for Trips, & locations.',
+        '🖼️ Wallpapers – 15 beautiful new wallpapers added.',
+        '🎨 Smoother UI – Refined transitions & icon animations.',
+        '🐛 Better Stability – Fixed bugs and improved overall performance.'
+      ]
+    },
+    {
+      version: '1.2.2 (107)',
+      date: '',
+      notes: [
+        '🔍 Smart AI Search – Smarter and faster photo discovery.',
+        '🎬 Improved Media Preview – Enhanced image viewing and support for video playback up to 8K.',
+        '✨ Better Media Types & Utilities – Improved overall experience.',
+        '🎨 Smoother UI – Improved animations and refined Glass UI.',
+        '⚡ Performance & Stability – Bug fixes and overall improvements.'
+      ]
+    },
+    {
+      version: '1.1.5 (105)',
+      date: '',
+      notes: [
+        '✨ Added new Media Types collections:',
+        '• Selfies',
+        '• Portraits',
+        '• Panoramas',
+        '🐾 Added new Utilities:',
+        '• Pets',
+        '• Food',
+        '• Large Media',
+        '• Duplicate Photos',
+        '• Blurry Photos',
+        '🤖 Enhanced AI with Wallpaper Suggestions for smarter photo recommendations.',
+        '🎨 New personalization features:',
+        '• Appearance Mode',
+        '• Liquid Mode',
+        '• Customize Collections',
+        '⚡ Improved Media Types and Utilities experience.',
+        '🚀 Performance enhancements, stability improvements, and bug fixes for a smoother experience.'
+      ]
+    }
+  ];
+
+  // (renderNotes is defined below esc)
+  // Lines starting with "• " become sub-items of the line above them.
+  const renderNotes = notes => {
+    const out = [];
+    notes.forEach(n => {
+      if (n.startsWith('•') && out.length) {
+        out[out.length - 1].sub.push(n.replace(/^•\s*/, ''));
+      } else {
+        out.push({text: n, sub: []});
+      }
+    });
+    return out.map(i =>
+      '<li>' + esc(i.text) +
+      (i.sub.length ? '<ul class="sub">' + i.sub.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') +
+      '</li>'
+    ).join('');
+  };
+
+  const esc = t => String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  const latestBox = document.getElementById('wn-latest');
+  const historyBox = document.getElementById('wn-history');
+
+  if (releases.length) {
+    const r = releases[0];
+    latestBox.innerHTML =
+      '<span class="eyebrow">Latest version</span>' +
+      '<h3>Version ' + esc(r.version) + '</h3>' +
+      (r.date ? '<p class="wn-meta">Released: ' + esc(r.date) + '</p>' : '<p class="wn-meta">Current release on Google Play</p>') +
+      '<ul class="wn-notes">' + renderNotes(r.notes) + '</ul>';
+
+    historyBox.innerHTML = releases.slice(1).map(o =>
+      '<details class="release">' +
+        '<summary><span class="ver">Version ' + esc(o.version) + '</span>' +
+        '<span class="date">' + esc(o.date || '') + '</span><span class="toggle">+</span></summary>' +
+        '<div class="release-body"><ul>' + renderNotes(o.notes) + '</ul></div>' +
+      '</details>'
+    ).join('');
+
+    historyBox.querySelectorAll('.release').forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open) historyBox.querySelectorAll('.release').forEach(o => { if (o !== d) o.open = false; });
+      });
+    });
+  }
+
+
+  // Feedback form: opens the visitor's email app, nothing is sent to a server.
+  const form = document.getElementById('feedback-form');
+  const status = document.getElementById('form-status');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const val = id => document.getElementById(id).value.trim();
+    const message = val('f-message');
+
+    if (!message) {
+      status.textContent = 'Please write a message first.';
+      document.getElementById('f-message').focus();
+      return;
+    }
+
+    const type = val('f-type');
+    const body =
+      'Type: ' + type + '\n' +
+      'Name: ' + (val('f-name') || '-') + '\n' +
+      'App version: ' + (val('f-version') || '-') + '\n' +
+      'Device: ' + (val('f-device') || '-') + '\n\n' +
+      message;
+
+    status.textContent = 'Opening your email app…';
+    window.location.href = 'mailto:snsl.developer@gmail.com' +
+      '?subject=' + encodeURIComponent('Photos – Liquid Glass: ' + type) +
+      '&body=' + encodeURIComponent(body);
+  });
+
+
+  // Highlight the current policy section in the contents list.
+  const tocLinks = document.querySelectorAll('.policy-toc a');
+  const policyCards = document.querySelectorAll('.policy-card');
+
+  if ('IntersectionObserver' in window && tocLinks.length) {
+    const tocObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        }
+      });
+    }, {
+      rootMargin: '-30% 0px -60% 0px'
+    });
+
+    policyCards.forEach(card => tocObserver.observe(card));
+  }
+
+})();
+</script>
+
+</body>
+</html>
